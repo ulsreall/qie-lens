@@ -30,7 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent config files
+CLAUDE.md
+AGENTS.md
+.cursorrules
+
+# audio/music generation artifacts
+*.mp3
+*.wav
+*.ogg
+gen_music*.py
+
+# video artifacts (keep only final demo)
+public/demo-*.mp4
+!public/demo-final.mp4
