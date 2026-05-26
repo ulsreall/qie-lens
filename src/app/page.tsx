@@ -9,13 +9,16 @@ import NetworkChart from "@/components/NetworkChart";
 import TransactionTable from "@/components/TransactionTable";
 import BlockTable from "@/components/BlockTable";
 import GasPriceCard from "@/components/GasPriceCard";
+import Link from "next/link";
 import {
   Activity,
   Blocks,
   ArrowRightLeft,
   Wallet,
   DollarSign,
+  Coins,
 } from "lucide-react";
+import SearchBar from "@/components/SearchBar";
 
 function formatNumber(n: string | number) {
   const num = typeof n === "string" ? parseInt(n) : n;
@@ -59,6 +62,12 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2">
+              <Link href="/tokens" className="text-[#3a6b8a] hover:text-[#00d4ff] text-xs font-medium transition-colors flex items-center gap-1">
+                <Coins className="w-3.5 h-3.5" />
+                Tokens
+              </Link>
+            </div>
             <div className="hidden sm:flex items-center gap-2 bg-[#061024] border border-[#0c2a4a] rounded-xl px-3 py-2">
               <div className="w-2 h-2 bg-[#00d4ff] rounded-full pulse-dot" />
               <span className="text-[#3a6b8a] text-xs font-medium">Testnet</span>
@@ -85,6 +94,10 @@ export default async function Home() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+        {/* Search Bar */}
+        <div className="flex justify-center fade-in">
+          <SearchBar />
+        </div>
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 fade-in">
           <StatCard

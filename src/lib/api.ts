@@ -27,7 +27,13 @@ export interface Transaction {
   status: string;
   gas_used: string;
   gas_price: string;
+  gas_limit: string;
   fee: { value: string };
+  nonce: number;
+  type: number;
+  confirmations: number;
+  input: string;
+  decoded_input?: { method_call: string; method_id: string; parameters: unknown[] };
 }
 
 export interface Block {
@@ -39,6 +45,12 @@ export interface Block {
   gas_limit: string;
   miner: { hash: string; name?: string };
   size: string;
+  parent_hash: string;
+  difficulty: string;
+  total_difficulty: string;
+  base_fee_per_gas: string;
+  burnt_fees: string;
+  reward: string;
 }
 
 export interface Token {
@@ -50,6 +62,8 @@ export interface Token {
   exchange_rate: string | null;
   icon_url: string | null;
   total_supply: string;
+  circulating_market_cap: string | null;
+  decimals: string;
 }
 
 async function fetchAPI<T>(endpoint: string): Promise<T> {
@@ -70,37 +84,39 @@ export async function getTransactions(
   return fetchAPI(`/transactions?limit=${limit}`);
 }
 
+export async function getTransaction(hash: string): Promise<Transaction> {
+  return fetchAPI(`/transactions/${hash}`);
+}
+
 export async function getBlocks(limit = 10): Promise<{ items: Block[] }> {
   return fetchAPI(`/blocks?limit=${limit}`);
 }
 
+export async function getBlock(height: number): Promise<Block> {
+  return fetchAPI(`/blocks/${height}`);
+}
+
+export async function getBlockTransactions(
+  height: number,
+  limit = 20
+): Promise<{ items: Transaction[] }> {
+  return fetchAPI(`/blocks/${height}/transactions?limit=${limit}`);
+}
+
 export async function getTokens(
-  limit = 10
+  limit = 20
 ): Promise<{ items: Token[] }> {
   return fetchAPI(`/tokens?limit=${limit}`);
 }
 
 // Chart data: derive from stats
 export function buildChartData(stats: NetworkStats) {
-  const price = parseFloat(stats.coin_price);
-  const priceChange = stats.coin_price_change_percentage;
-  const priceBefore = price / (1 + priceChange / 100);
-
   return {
     networkOverview: [
       { label: "Total Blocks", value: parseInt(stats.total_blocks) },
       { label: "Total Txs", value: parseInt(stats.total_transactions) },
       { label: "Addresses", value: parseInt(stats.total_addresses) },
       { label: "Txs Today", value: parseInt(stats.transactions_today) },
-    ],
-    priceData: [
-      { label: "Previous", value: priceBefore },
-      { label: "Current", value: price },
-    ],
-    gasData: [
-      { label: "Slow", value: stats.gas_prices.slow },
-      { label: "Average", value: stats.gas_prices.average },
-      { label: "Fast", value: stats.gas_prices.fast },
     ],
   };
 }
