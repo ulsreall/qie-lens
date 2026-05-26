@@ -21,7 +21,7 @@
 ## 📸 Preview
 
 <div align="center">
-  <img src="public/logo.png" alt="QIE Lens Dashboard" width="800" />
+  <img src="public/preview.png" alt="QIE Lens Dashboard" width="100%" />
 </div>
 
 ## 🎯 Problem
