@@ -29,17 +29,17 @@ function timeAgo(timestamp: string) {
 
 export default function BlockTable({ blocks }: { blocks: Block[] }) {
   return (
-    <div className="bg-[#0a0f1e] border border-[#1e293b] rounded-2xl overflow-hidden">
-      <div className="px-6 py-4 border-b border-[#1e293b] flex items-center justify-between">
+    <div className="bg-[#061024] border border-[#0c2a4a] rounded-2xl overflow-hidden lens-ring">
+      <div className="px-6 py-4 border-b border-[#0c2a4a] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-500 pulse-dot" />
+          <div className="w-2 h-2 rounded-full bg-[#00d4ff] pulse-dot" />
           <h3 className="text-white text-sm font-semibold">Latest Blocks</h3>
         </div>
         <a
           href="https://testnet.qie.digital/blocks"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-400 hover:text-blue-300 text-xs transition-colors"
+          className="text-[#00d4ff] hover:text-[#5be5ff] text-xs transition-colors"
         >
           View All →
         </a>
@@ -47,7 +47,7 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="text-[#475569] text-[10px] uppercase tracking-wider">
+            <tr className="text-[#2a5a7a] text-[10px] uppercase tracking-wider">
               <th className="px-6 py-3 text-left font-medium">Block</th>
               <th className="px-6 py-3 text-left font-medium">Age</th>
               <th className="px-6 py-3 text-center font-medium">Txs</th>
@@ -65,40 +65,40 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
               return (
                 <tr
                   key={block.height}
-                  className="border-t border-[#1e293b]/50 hover:bg-[#111827]/50 transition-colors"
+                  className="border-t border-[#0c2a4a]/40 hover:bg-[#0a1a30]/50 transition-colors"
                 >
                   <td className="px-6 py-3">
                     <a
                       href={`https://testnet.qie.digital/block/${block.height}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 flex items-center gap-2 text-sm font-medium transition-colors"
+                      className="text-[#00d4ff] hover:text-[#5be5ff] flex items-center gap-2 text-sm font-medium transition-colors"
                     >
                       <Box className="w-3.5 h-3.5" />
                       {block.height}
                     </a>
                   </td>
-                  <td className="px-6 py-3 text-sm text-[#64748b]">
+                  <td className="px-6 py-3 text-sm text-[#3a6b8a]">
                     {timeAgo(block.timestamp)}
                   </td>
                   <td className="px-6 py-3 text-center">
-                    <span className="bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-lg text-xs font-medium">
+                    <span className="bg-[#00d4ff]/10 text-[#00d4ff] px-2.5 py-1 rounded-lg text-xs font-medium">
                       {block.tx_count}
                     </span>
                   </td>
                   <td className="px-6 py-3">
-                    <span className="text-sm text-[#94a3b8]">
+                    <span className="text-sm text-[#5a8aaa]">
                       {block.miner?.name || shortenHash(block.miner?.hash || "")}
                     </span>
                   </td>
                   <td className="px-6 py-3 text-right">
-                    <div className="text-sm text-[#94a3b8]">
+                    <div className="text-sm text-[#5a8aaa]">
                       {gasUsed.toLocaleString()}
-                      <span className="text-[#475569] ml-1">({gasPercent}%)</span>
+                      <span className="text-[#2a5a7a] ml-1">({gasPercent}%)</span>
                     </div>
-                    <div className="w-full bg-[#111827] rounded-full h-1 mt-1.5">
+                    <div className="w-full bg-[#0a1a30] rounded-full h-1 mt-1.5">
                       <div
-                        className="bg-gradient-to-r from-blue-500 to-blue-400 h-1 rounded-full"
+                        className="bg-gradient-to-r from-[#0091b3] to-[#00d4ff] h-1 rounded-full"
                         style={{ width: `${Math.min(parseFloat(gasPercent), 100)}%` }}
                       />
                     </div>

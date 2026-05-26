@@ -15,7 +15,6 @@ import {
   ArrowRightLeft,
   Wallet,
   DollarSign,
-  Zap,
 } from "lucide-react";
 
 function formatNumber(n: string | number) {
@@ -35,39 +34,49 @@ export default async function Home() {
   const chartData = buildChartData(stats);
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white grid-bg">
-      {/* Ambient glow */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-0 right-0 w-[600px] h-[300px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
+    <div className="min-h-screen bg-[#020a18] text-white grid-bg">
+      {/* Ambient lens glow */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#00d4ff]/[0.04] rounded-full blur-[150px] pointer-events-none" />
+      <div className="fixed bottom-0 right-0 w-[500px] h-[300px] bg-[#0091b3]/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       {/* Header */}
-      <header className="border-b border-[#1e293b] bg-[#030712]/80 backdrop-blur-xl sticky top-0 z-50">
+      <header className="border-b border-[#0c2a4a] bg-[#020a18]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <Activity className="w-5 h-5 text-white" />
+            {/* Lens icon — stylized eye */}
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00d4ff] to-[#0091b3] rounded-xl flex items-center justify-center shadow-lg shadow-[#00d4ff]/20">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="white" strokeWidth="1.5"/>
+                  <circle cx="12" cy="12" r="1" fill="white"/>
+                </svg>
+              </div>
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight">QIE Lens</h1>
-              <p className="text-[#475569] text-xs">
-                QIE Blockchain Explorer & Analytics
+              <h1 className="text-lg font-bold tracking-tight">
+                <span className="cyan-gradient-text">QIE</span>{" "}
+                <span className="text-white/80 font-light">Lens</span>
+              </h1>
+              <p className="text-[#2a5a7a] text-[10px] uppercase tracking-widest font-medium">
+                Blockchain Explorer & Analytics
               </p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 bg-[#0a0f1e] border border-[#1e293b] rounded-xl px-3 py-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full pulse-dot" />
-              <span className="text-[#64748b] text-xs font-medium">Testnet</span>
+            <div className="hidden sm:flex items-center gap-2 bg-[#061024] border border-[#0c2a4a] rounded-xl px-3 py-2">
+              <div className="w-2 h-2 bg-[#00d4ff] rounded-full pulse-dot" />
+              <span className="text-[#3a6b8a] text-xs font-medium">Testnet</span>
             </div>
             {stats.coin_price && (
-              <div className="text-right bg-[#0a0f1e] border border-[#1e293b] rounded-xl px-3 py-2">
+              <div className="text-right bg-[#061024] border border-[#0c2a4a] rounded-xl px-3 py-2">
                 <div className="text-sm font-semibold text-white">
                   ${parseFloat(stats.coin_price).toFixed(4)}
                 </div>
                 <div
                   className={`text-xs font-medium ${
                     stats.coin_price_change_percentage >= 0
-                      ? "text-green-400"
+                      ? "text-[#5be5ff]"
                       : "text-red-400"
                   }`}
                 >
@@ -87,26 +96,22 @@ export default async function Home() {
             title="Total Blocks"
             value={formatNumber(stats.total_blocks)}
             icon={<Blocks className="w-4 h-4" />}
-            gradient="from-blue-500/10 to-blue-600/5"
           />
           <StatCard
             title="Total Transactions"
             value={formatNumber(stats.total_transactions)}
             subtitle={`${formatNumber(stats.transactions_today)} today`}
             icon={<ArrowRightLeft className="w-4 h-4" />}
-            gradient="from-purple-500/10 to-purple-600/5"
           />
           <StatCard
             title="Total Addresses"
             value={formatNumber(stats.total_addresses)}
             icon={<Wallet className="w-4 h-4" />}
-            gradient="from-cyan-500/10 to-cyan-600/5"
           />
           <StatCard
             title="Market Cap"
             value={`$${formatNumber(stats.market_cap)}`}
             icon={<DollarSign className="w-4 h-4" />}
-            gradient="from-green-500/10 to-green-600/5"
           />
         </div>
 
@@ -122,19 +127,19 @@ export default async function Home() {
         </div>
 
         {/* Network Stats Bar */}
-        <div className="bg-[#0a0f1e] border border-[#1e293b] rounded-2xl p-6 fade-in" style={{ animationDelay: "0.2s" }}>
+        <div className="bg-[#061024] border border-[#0c2a4a] rounded-2xl p-6 lens-ring fade-in" style={{ animationDelay: "0.2s" }}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             <div>
-              <p className="text-[#475569] text-[10px] uppercase tracking-wider mb-2 font-medium">
+              <p className="text-[#2a5a7a] text-[10px] uppercase tracking-widest mb-2 font-medium">
                 Block Time
               </p>
               <p className="text-white font-bold text-lg">
                 {(stats.average_block_time / 1000).toFixed(1)}
-                <span className="text-[#475569] text-xs font-normal ml-1">sec</span>
+                <span className="text-[#2a5a7a] text-xs font-normal ml-1">sec</span>
               </p>
             </div>
             <div>
-              <p className="text-[#475569] text-[10px] uppercase tracking-wider mb-2 font-medium">
+              <p className="text-[#2a5a7a] text-[10px] uppercase tracking-widest mb-2 font-medium">
                 Gas Used Today
               </p>
               <p className="text-white font-bold text-lg">
@@ -142,21 +147,21 @@ export default async function Home() {
               </p>
             </div>
             <div>
-              <p className="text-[#475569] text-[10px] uppercase tracking-wider mb-2 font-medium">
+              <p className="text-[#2a5a7a] text-[10px] uppercase tracking-widest mb-2 font-medium">
                 Network Utilization
               </p>
               <p className="text-white font-bold text-lg">
                 {stats.network_utilization_percentage}
-                <span className="text-[#475569] text-xs font-normal ml-1">%</span>
+                <span className="text-[#2a5a7a] text-xs font-normal ml-1">%</span>
               </p>
             </div>
             <div>
-              <p className="text-[#475569] text-[10px] uppercase tracking-wider mb-2 font-medium">
+              <p className="text-[#2a5a7a] text-[10px] uppercase tracking-widest mb-2 font-medium">
                 Avg Gas Price
               </p>
               <p className="text-white font-bold text-lg">
                 {stats.gas_prices.average}
-                <span className="text-[#475569] text-xs font-normal ml-1">Gwei</span>
+                <span className="text-[#2a5a7a] text-xs font-normal ml-1">Gwei</span>
               </p>
             </div>
           </div>
@@ -170,13 +175,13 @@ export default async function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#1e293b] mt-16">
+      <footer className="border-t border-[#0c2a4a] mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-6 h-6 bg-gradient-to-br from-[#00d4ff] to-[#0091b3] rounded-lg flex items-center justify-center">
               <Activity className="w-3 h-3 text-white" />
             </div>
-            <p className="text-[#334155] text-sm">
+            <p className="text-[#1a3a5a] text-sm">
               QIE Lens — Built for QIE Hackathon 2026
             </p>
           </div>
@@ -185,7 +190,7 @@ export default async function Home() {
               href="https://testnet.qie.digital"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#475569] hover:text-[#94a3b8] text-sm transition-colors"
+              className="text-[#2a5a7a] hover:text-[#5a8aaa] text-sm transition-colors"
             >
               Explorer
             </a>
@@ -193,7 +198,7 @@ export default async function Home() {
               href="https://docs.qie.digital"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#475569] hover:text-[#94a3b8] text-sm transition-colors"
+              className="text-[#2a5a7a] hover:text-[#5a8aaa] text-sm transition-colors"
             >
               Docs
             </a>
@@ -201,7 +206,7 @@ export default async function Home() {
               href="https://github.com/ulsreall/qie-lens"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#475569] hover:text-[#94a3b8] text-sm transition-colors"
+              className="text-[#2a5a7a] hover:text-[#5a8aaa] text-sm transition-colors"
             >
               GitHub
             </a>

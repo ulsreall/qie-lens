@@ -2,18 +2,20 @@
 
 @layer base {
   :root {
-    --background: #030712;
-    --foreground: #f9fafb;
-    --card: #0a0f1e;
-    --card-border: #1e293b;
-    --accent: #3b82f6;
-    --accent-purple: #8b5cf6;
-    --muted: #64748b;
+    --background: #020a18;
+    --foreground: #e8f4ff;
+    --card: #061024;
+    --card-border: #0c2a4a;
+    --accent: #00d4ff;
+    --accent-light: #5be5ff;
+    --accent-dark: #0091b3;
+    --muted: #3a6b8a;
+    --glow: rgba(0, 212, 255, 0.15);
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #1e293b transparent;
+    scrollbar-color: #0c2a4a transparent;
   }
 
   *::-webkit-scrollbar {
@@ -26,12 +28,12 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: #0c2a4a;
     border-radius: 3px;
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #1a4a6a;
   }
 
   body {
@@ -43,39 +45,29 @@
 @layer utilities {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
-  .glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), 0 0 60px rgba(59, 130, 246, 0.05);
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.05);
   }
 
-  .glow-purple {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 60px rgba(139, 92, 246, 0.05);
+  .glow-cyan-strong {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 80px rgba(0, 212, 255, 0.1);
   }
 
-  .gradient-border {
-    position: relative;
-  }
-
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .lens-ring {
+    border: 1.5px solid rgba(0, 212, 255, 0.15);
+    box-shadow:
+      inset 0 0 20px rgba(0, 212, 255, 0.03),
+      0 0 15px rgba(0, 212, 255, 0.06);
   }
 
   .fade-in {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
   }
 
   @keyframes fadeIn {
@@ -84,11 +76,24 @@
   }
 
   .pulse-dot {
-    animation: pulse-dot 2s ease-in-out infinite;
+    animation: pulseDot 2s ease-in-out infinite;
   }
 
-  @keyframes pulse-dot {
+  @keyframes pulseDot {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    50% { opacity: 0.3; }
+  }
+
+  .lens-glow-bg {
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 0%, rgba(0, 212, 255, 0.06), transparent),
+      radial-gradient(ellipse 400px 300px at 80% 20%, rgba(0, 145, 179, 0.04), transparent);
+  }
+
+  .cyan-gradient-text {
+    background: linear-gradient(135deg, #00d4ff, #5be5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
