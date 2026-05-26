@@ -61,13 +61,13 @@ export default async function BlockPage({
   const details = [
     { label: "Block Height", value: block.height.toLocaleString(), icon: <Box className="w-4 h-4" /> },
     { label: "Timestamp", value: `${timeAgo(block.timestamp)} (${new Date(block.timestamp).toLocaleString()})`, icon: <Clock className="w-4 h-4" /> },
-    { label: "Transactions", value: block.tx_count.toLocaleString(), icon: <Layers className="w-4 h-4" /> },
+    { label: "Transactions", value: block.transaction_count.toLocaleString(), icon: <Layers className="w-4 h-4" /> },
     { label: "Miner", value: block.miner?.name || shortenHash(block.miner?.hash || ""), icon: <Pickaxe className="w-4 h-4" /> },
     { label: "Gas Used", value: `${gasUsed.toLocaleString()} (${gasPercent}%)`, icon: <Fuel className="w-4 h-4" /> },
     { label: "Gas Limit", value: gasLimit.toLocaleString(), icon: <Fuel className="w-4 h-4" /> },
     { label: "Base Fee", value: `${block.base_fee_per_gas || "N/A"} Gwei`, icon: <Flame className="w-4 h-4" /> },
     { label: "Burnt Fees", value: block.burnt_fees ? `${formatValue(block.burnt_fees)} QIE` : "N/A", icon: <Flame className="w-4 h-4" /> },
-    { label: "Block Reward", value: block.reward ? `${formatValue(block.reward)} QIE` : "N/A", icon: <Box className="w-4 h-4" /> },
+    { label: "Block Reward", value: block.rewards?.[0]?.reward ? `${formatValue(block.rewards[0].reward)} QIE` : "N/A", icon: <Box className="w-4 h-4" /> },
     { label: "Size", value: `${parseInt(block.size).toLocaleString()} bytes`, icon: <Layers className="w-4 h-4" /> },
   ];
 
@@ -164,7 +164,7 @@ export default async function BlockPage({
         <div className="bg-[#061024] border border-[#0c2a4a] rounded-2xl overflow-hidden lens-ring">
           <div className="px-6 py-4 border-b border-[#0c2a4a]">
             <h3 className="text-white text-sm font-semibold">
-              Transactions ({block.tx_count})
+              Transactions ({block.transaction_count})
             </h3>
           </div>
           {txData.items.length === 0 ? (

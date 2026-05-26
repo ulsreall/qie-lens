@@ -40,7 +40,7 @@ export interface Block {
   height: number;
   hash: string;
   timestamp: string;
-  tx_count: number;
+  transaction_count: number;
   gas_used: string;
   gas_limit: string;
   miner: { hash: string; name?: string };
@@ -50,7 +50,9 @@ export interface Block {
   total_difficulty: string;
   base_fee_per_gas: string;
   burnt_fees: string;
-  reward: string;
+  rewards: { reward: string; type: string }[];
+  transaction_fees: string;
+  nonce: string;
 }
 
 export interface Token {

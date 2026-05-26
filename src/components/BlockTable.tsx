@@ -6,7 +6,7 @@ interface Block {
   height: number;
   hash: string;
   timestamp: string;
-  tx_count: number;
+  transaction_count: number;
   gas_used: string;
   gas_limit: string;
   miner: { hash: string; name?: string };
@@ -83,7 +83,7 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
                   </td>
                   <td className="px-6 py-3 text-center">
                     <span className="bg-[#00d4ff]/10 text-[#00d4ff] px-2.5 py-1 rounded-lg text-xs font-medium">
-                      {block.tx_count}
+                      {block.transaction_count}
                     </span>
                   </td>
                   <td className="px-6 py-3">
