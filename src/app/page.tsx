@@ -1,65 +1,189 @@
-import Image from "next/image";
+import {
+  getStats,
+  getTransactions,
+  getBlocks,
+  buildChartData,
+} from "@/lib/api";
+import StatCard from "@/components/StatCard";
+import NetworkChart from "@/components/NetworkChart";
+import TransactionTable from "@/components/TransactionTable";
+import BlockTable from "@/components/BlockTable";
+import GasPriceCard from "@/components/GasPriceCard";
+import {
+  Activity,
+  Blocks,
+  ArrowRightLeft,
+  Wallet,
+  DollarSign,
+  Zap,
+} from "lucide-react";
 
-export default function Home() {
+function formatNumber(n: string | number) {
+  const num = typeof n === "string" ? parseInt(n) : n;
+  if (num >= 1000000) return `${(num / 1000000).toFixed(2)}M`;
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+  return num.toLocaleString();
+}
+
+export default async function Home() {
+  const [stats, txData, blockData] = await Promise.all([
+    getStats(),
+    getTransactions(10),
+    getBlocks(10),
+  ]);
+
+  const chartData = buildChartData(stats);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-gray-950 text-white">
+      {/* Header */}
+      <header className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Activity className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold">QIE Lens</h1>
+              <p className="text-gray-500 text-xs">
+                QIE Blockchain Explorer & Analytics
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-lg px-3 py-1.5">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-gray-400 text-sm">Testnet</span>
+            </div>
+            {stats.coin_price && (
+              <div className="text-right">
+                <div className="text-sm font-medium text-white">
+                  ${parseFloat(stats.coin_price).toFixed(4)}
+                </div>
+                <div
+                  className={`text-xs ${
+                    stats.coin_price_change_percentage >= 0
+                      ? "text-green-400"
+                      : "text-red-400"
+                  }`}
+                >
+                  {stats.coin_price_change_percentage >= 0 ? "+" : ""}
+                  {stats.coin_price_change_percentage.toFixed(2)}%
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard
+            title="Total Blocks"
+            value={formatNumber(stats.total_blocks)}
+            icon={<Blocks className="w-5 h-5" />}
+          />
+          <StatCard
+            title="Total Transactions"
+            value={formatNumber(stats.total_transactions)}
+            subtitle={`${formatNumber(stats.transactions_today)} today`}
+            icon={<ArrowRightLeft className="w-5 h-5" />}
+          />
+          <StatCard
+            title="Total Addresses"
+            value={formatNumber(stats.total_addresses)}
+            icon={<Wallet className="w-5 h-5" />}
+          />
+          <StatCard
+            title="Market Cap"
+            value={`$${formatNumber(stats.market_cap)}`}
+            icon={<DollarSign className="w-5 h-5" />}
+          />
+        </div>
+
+        {/* Charts Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2">
+            <NetworkChart
+              data={chartData.networkOverview}
+              title="Network Overview"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <GasPriceCard gasPrices={stats.gas_prices} />
+        </div>
+
+        {/* Network Stats Bar */}
+        <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <div>
+              <p className="text-gray-500 text-xs uppercase mb-1">
+                Block Time
+              </p>
+              <p className="text-white font-bold">
+                {(stats.average_block_time / 1000).toFixed(1)}s
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-500 text-xs uppercase mb-1">
+                Gas Used Today
+              </p>
+              <p className="text-white font-bold">
+                {formatNumber(stats.gas_used_today)}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-500 text-xs uppercase mb-1">
+                Network Utilization
+              </p>
+              <p className="text-white font-bold">
+                {stats.network_utilization_percentage}%
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-500 text-xs uppercase mb-1">
+                Avg Gas Price
+              </p>
+              <p className="text-white font-bold">
+                {stats.gas_prices.average} Gwei
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tables */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <BlockTable blocks={blockData.items} />
+          <TransactionTable transactions={txData.items} />
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-800 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
+          <p className="text-gray-600 text-sm">
+            QIE Lens — Built for QIE Hackathon 2026
+          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://testnet.qie.digital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-400 text-sm"
+            >
+              Explorer
+            </a>
+            <a
+              href="https://docs.qie.digital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-400 text-sm"
+            >
+              Docs
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
