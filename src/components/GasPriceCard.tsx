@@ -10,32 +10,45 @@ interface GasPrices {
 
 export default function GasPriceCard({ gasPrices }: { gasPrices: GasPrices }) {
   const levels = [
-    { label: "Slow", value: gasPrices.slow, color: "bg-green-500", text: "text-green-400" },
-    { label: "Average", value: gasPrices.average, color: "bg-yellow-500", text: "text-yellow-400" },
-    { label: "Fast", value: gasPrices.fast, color: "bg-red-500", text: "text-red-400" },
+    { label: "Slow", value: gasPrices.slow, color: "#10B981", width: "33%" },
+    { label: "Average", value: gasPrices.average, color: "#F59E0B", width: "66%" },
+    { label: "Fast", value: gasPrices.fast, color: "#EF4444", width: "100%" },
   ];
 
   return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <Fuel className="w-4 h-4 text-orange-400" />
-        <h3 className="text-gray-400 text-sm font-medium">Gas Prices (Gwei)</h3>
+    <div className="bg-[#0a0f1e] border border-[#1e293b] rounded-2xl p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+          <Fuel className="w-4 h-4 text-orange-400" />
+        </div>
+        <h3 className="text-white text-sm font-semibold">Gas Prices</h3>
       </div>
-      <div className="space-y-3">
+
+      <div className="space-y-4">
         {levels.map((level) => (
-          <div key={level.label} className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${level.color}`} />
-              <span className="text-gray-400 text-sm">{level.label}</span>
+          <div key={level.label}>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[#64748b] text-xs">{level.label}</span>
+              <span className="font-mono text-sm font-bold text-white">
+                {level.value} <span className="text-[#475569] text-xs font-normal">Gwei</span>
+              </span>
             </div>
-            <span className={`font-mono font-bold ${level.text}`}>
-              {level.value}
-            </span>
+            <div className="w-full bg-[#111827] rounded-full h-1.5">
+              <div
+                className="h-1.5 rounded-full transition-all duration-500"
+                style={{
+                  width: level.width,
+                  backgroundColor: level.color,
+                  boxShadow: `0 0 8px ${level.color}40`,
+                }}
+              />
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 pt-4 border-t border-gray-800">
-        <p className="text-gray-600 text-xs">
+
+      <div className="mt-5 pt-4 border-t border-[#1e293b]">
+        <p className="text-[#475569] text-xs">
           QIE gas is extremely cheap — transactions cost fractions of a cent.
         </p>
       </div>

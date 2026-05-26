@@ -1,13 +1,19 @@
 "use client";
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
 interface ChartData {
   label: string;
   value: number;
 }
-
-const COLORS = ["#3B82F6", "#8B5CF6", "#06B6D4", "#10B981"];
 
 export default function NetworkChart({
   data,
@@ -17,18 +23,32 @@ export default function NetworkChart({
   title: string;
 }) {
   return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-5">
-      <h3 className="text-gray-400 text-sm font-medium mb-4">{title}</h3>
-      <ResponsiveContainer width="100%" height={200}>
-        <BarChart data={data} barSize={40}>
+    <div className="bg-[#0a0f1e] border border-[#1e293b] rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-white text-sm font-semibold">{title}</h3>
+        <span className="text-[#475569] text-xs">Last 24h</span>
+      </div>
+      <ResponsiveContainer width="100%" height={220}>
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
+              <stop offset="100%" stopColor="#3B82F6" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#1e293b"
+            vertical={false}
+          />
           <XAxis
             dataKey="label"
-            tick={{ fill: "#6B7280", fontSize: 12 }}
+            tick={{ fill: "#475569", fontSize: 11 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#6B7280", fontSize: 12 }}
+            tick={{ fill: "#475569", fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) =>
@@ -41,19 +61,31 @@ export default function NetworkChart({
           />
           <Tooltip
             contentStyle={{
-              background: "#1F2937",
-              border: "1px solid #374151",
-              borderRadius: "8px",
-              color: "#F9FAFB",
+              background: "#0a0f1e",
+              border: "1px solid #1e293b",
+              borderRadius: "12px",
+              color: "#f9fafb",
+              fontSize: "12px",
+              padding: "8px 12px",
             }}
-            formatter={(value) => [Number(value).toLocaleString(), ""]}
+            formatter={(value: unknown) => [Number(value).toLocaleString(), "Count"]}
+            labelStyle={{ color: "#64748b" }}
           />
-          <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-            {data.map((_, i) => (
-              <Cell key={i} fill={COLORS[i % COLORS.length]} />
-            ))}
-          </Bar>
-        </BarChart>
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#3B82F6"
+            strokeWidth={2}
+            fill="url(#gradientArea)"
+            dot={false}
+            activeDot={{
+              r: 5,
+              fill: "#3B82F6",
+              stroke: "#0a0f1e",
+              strokeWidth: 2,
+            }}
+          />
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

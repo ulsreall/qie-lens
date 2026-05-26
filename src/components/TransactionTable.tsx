@@ -40,71 +40,78 @@ export default function TransactionTable({
   transactions: Transaction[];
 }) {
   return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-800">
-        <h3 className="text-gray-400 text-sm font-medium">Recent Transactions</h3>
+    <div className="bg-[#0a0f1e] border border-[#1e293b] rounded-2xl overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#1e293b] flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-purple-500 pulse-dot" />
+          <h3 className="text-white text-sm font-semibold">Latest Transactions</h3>
+        </div>
+        <a
+          href="https://testnet.qie.digital/transactions"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-purple-400 hover:text-purple-300 text-xs transition-colors"
+        >
+          View All →
+        </a>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="text-gray-500 text-xs uppercase">
-              <th className="px-5 py-3 text-left">Tx Hash</th>
-              <th className="px-5 py-3 text-left">Method</th>
-              <th className="px-5 py-3 text-left">Block</th>
-              <th className="px-5 py-3 text-left">Age</th>
-              <th className="px-5 py-3 text-left">From</th>
-              <th className="px-5 py-3 text-left">To</th>
-              <th className="px-5 py-3 text-right">Value</th>
-              <th className="px-5 py-3 text-center">Status</th>
+            <tr className="text-[#475569] text-[10px] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left font-medium">Tx Hash</th>
+              <th className="px-6 py-3 text-left font-medium">Method</th>
+              <th className="px-6 py-3 text-left font-medium">Block</th>
+              <th className="px-6 py-3 text-left font-medium">From</th>
+              <th className="px-6 py-3 text-left font-medium">To</th>
+              <th className="px-6 py-3 text-right font-medium">Value</th>
+              <th className="px-6 py-3 text-center font-medium">Status</th>
             </tr>
           </thead>
           <tbody>
             {transactions.map((tx) => (
               <tr
                 key={tx.hash}
-                className="border-t border-gray-800/50 hover:bg-gray-800/30 transition-colors"
+                className="border-t border-[#1e293b]/50 hover:bg-[#111827]/50 transition-colors"
               >
-                <td className="px-5 py-3">
+                <td className="px-6 py-3">
                   <a
                     href={`https://testnet.qie.digital/tx/${tx.hash}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-sm"
+                    className="text-purple-400 hover:text-purple-300 flex items-center gap-1.5 text-sm font-medium transition-colors"
                   >
                     {shortenHash(tx.hash)}
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="w-3 h-3 opacity-50" />
                   </a>
                 </td>
-                <td className="px-5 py-3">
-                  <span className="bg-gray-800 text-gray-300 px-2 py-1 rounded text-xs font-mono">
+                <td className="px-6 py-3">
+                  <span className="bg-[#111827] text-[#94a3b8] px-2.5 py-1 rounded-lg text-xs font-mono border border-[#1e293b]">
                     {tx.method || "transfer"}
                   </span>
                 </td>
-                <td className="px-5 py-3 text-sm text-gray-400">
+                <td className="px-6 py-3 text-sm text-[#64748b]">
                   {tx.block}
                 </td>
-                <td className="px-5 py-3 text-sm text-gray-500">
-                  {timeAgo(tx.timestamp)}
-                </td>
-                <td className="px-5 py-3">
-                  <span className="text-sm text-gray-400">
+                <td className="px-6 py-3">
+                  <span className="text-sm text-[#94a3b8]">
                     {tx.from?.name || shortenHash(tx.from?.hash || "")}
                   </span>
                 </td>
-                <td className="px-5 py-3">
-                  <span className="text-sm text-gray-400">
+                <td className="px-6 py-3">
+                  <span className="text-sm text-[#94a3b8]">
                     {tx.to?.name || shortenHash(tx.to?.hash || "")}
                   </span>
                 </td>
-                <td className="px-5 py-3 text-right text-sm text-white font-medium">
-                  {formatValue(tx.value)} QIE
+                <td className="px-6 py-3 text-right text-sm text-white font-medium">
+                  {formatValue(tx.value)} <span className="text-[#475569] text-xs">QIE</span>
                 </td>
-                <td className="px-5 py-3 text-center">
+                <td className="px-6 py-3 text-center">
                   <span
-                    className={`text-xs px-2 py-1 rounded-full ${
+                    className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                       tx.status === "ok"
-                        ? "bg-green-900/30 text-green-400"
-                        : "bg-red-900/30 text-red-400"
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-red-500/10 text-red-400"
                     }`}
                   >
                     {tx.status === "ok" ? "Success" : "Failed"}
