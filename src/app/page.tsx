@@ -43,16 +43,11 @@ export default async function Home() {
       <header className="border-b border-[#0c2a4a] bg-[#020a18]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {/* Lens icon — stylized eye */}
-            <div className="relative w-10 h-10">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#00d4ff] to-[#0091b3] rounded-xl flex items-center justify-center shadow-lg shadow-[#00d4ff]/20">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="12" r="3" stroke="white" strokeWidth="1.5"/>
-                  <circle cx="12" cy="12" r="1" fill="white"/>
-                </svg>
-              </div>
-            </div>
+            <img
+              src="/logo.png"
+              alt="QIE Lens"
+              className="w-10 h-10 rounded-xl object-contain"
+            />
             <div>
               <h1 className="text-lg font-bold tracking-tight">
                 <span className="cyan-gradient-text">QIE</span>{" "}
