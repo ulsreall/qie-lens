@@ -68,9 +68,10 @@ export interface Token {
   decimals: string;
 }
 
-async function fetchAPI<T>(endpoint: string): Promise<T> {
+async function fetchAPI<T>(endpoint: string, revalidate = 30): Promise<T> {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
-    next: { revalidate: 30 },
+    next: { revalidate },
+    signal: AbortSignal.timeout(10000),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();

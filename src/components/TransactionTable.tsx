@@ -1,6 +1,5 @@
-"use client";
-
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { shortenHash, timeAgo, formatValue } from "@/lib/utils";
 
 interface Transaction {
   hash: string;
@@ -11,27 +10,6 @@ interface Transaction {
   value: string;
   status: string;
   method: string;
-}
-
-function shortenHash(hash: string) {
-  return `${hash.slice(0, 8)}...${hash.slice(-6)}`;
-}
-
-function timeAgo(timestamp: string) {
-  const seconds = Math.floor(
-    (Date.now() - new Date(timestamp).getTime()) / 1000
-  );
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
-}
-
-function formatValue(wei: string) {
-  const val = parseFloat(wei) / 1e18;
-  if (val === 0) return "0";
-  if (val < 0.001) return "<0.001";
-  return val.toFixed(4);
 }
 
 export default function TransactionTable({
@@ -75,15 +53,12 @@ export default function TransactionTable({
                 className="border-t border-[#0c2a4a]/40 hover:bg-[#0a1a30]/50 transition-colors"
               >
                 <td className="px-6 py-3">
-                  <a
-                    href={`https://testnet.qie.digital/tx/${tx.hash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`/tx/${tx.hash}`}
                     className="text-[#00d4ff] hover:text-[#5be5ff] flex items-center gap-1.5 text-sm font-medium transition-colors"
                   >
                     {shortenHash(tx.hash)}
-                    <ExternalLink className="w-3 h-3 opacity-50" />
-                  </a>
+                  </Link>
                 </td>
                 <td className="px-6 py-3">
                   <span className="bg-[#0a1a30] text-[#5a8aaa] px-2.5 py-1 rounded-lg text-xs font-mono border border-[#0c2a4a]">

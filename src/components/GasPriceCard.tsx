@@ -1,5 +1,3 @@
-"use client";
-
 import { Fuel } from "lucide-react";
 
 interface GasPrices {
@@ -9,10 +7,11 @@ interface GasPrices {
 }
 
 export default function GasPriceCard({ gasPrices }: { gasPrices: GasPrices }) {
+  const max = Math.max(gasPrices.slow, gasPrices.average, gasPrices.fast, 1);
   const levels = [
-    { label: "Slow", value: gasPrices.slow, color: "#10B981", width: "33%" },
-    { label: "Average", value: gasPrices.average, color: "#00d4ff", width: "66%" },
-    { label: "Fast", value: gasPrices.fast, color: "#5be5ff", width: "100%" },
+    { label: "Slow", value: gasPrices.slow, color: "#10B981", width: `${(gasPrices.slow / max) * 100}%` },
+    { label: "Average", value: gasPrices.average, color: "#00d4ff", width: `${(gasPrices.average / max) * 100}%` },
+    { label: "Fast", value: gasPrices.fast, color: "#5be5ff", width: `${(gasPrices.fast / max) * 100}%` },
   ];
 
   return (

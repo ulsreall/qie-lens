@@ -1,6 +1,6 @@
-"use client";
-
 import { Box } from "lucide-react";
+import Link from "next/link";
+import { shortenHash, timeAgo } from "@/lib/utils";
 
 interface Block {
   height: number;
@@ -11,20 +11,6 @@ interface Block {
   gas_limit: string;
   miner: { hash: string; name?: string };
   size: string;
-}
-
-function shortenHash(hash: string) {
-  return `${hash.slice(0, 8)}...${hash.slice(-6)}`;
-}
-
-function timeAgo(timestamp: string) {
-  const seconds = Math.floor(
-    (Date.now() - new Date(timestamp).getTime()) / 1000
-  );
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
 }
 
 export default function BlockTable({ blocks }: { blocks: Block[] }) {
@@ -68,15 +54,13 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
                   className="border-t border-[#0c2a4a]/40 hover:bg-[#0a1a30]/50 transition-colors"
                 >
                   <td className="px-6 py-3">
-                    <a
-                      href={`https://testnet.qie.digital/block/${block.height}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/block/${block.height}`}
                       className="text-[#00d4ff] hover:text-[#5be5ff] flex items-center gap-2 text-sm font-medium transition-colors"
                     >
                       <Box className="w-3.5 h-3.5" />
                       {block.height}
-                    </a>
+                    </Link>
                   </td>
                   <td className="px-6 py-3 text-sm text-[#3a6b8a]">
                     {timeAgo(block.timestamp)}

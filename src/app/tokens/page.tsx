@@ -1,14 +1,7 @@
 import { getTokens } from "@/lib/api";
+import { formatNumber } from "@/lib/utils";
 import Link from "next/link";
-import { ArrowLeft, Coins, Users, TrendingUp } from "lucide-react";
-
-function formatNumber(n: string | number) {
-  const num = typeof n === "string" ? parseInt(n) : n;
-  if (isNaN(num)) return "0";
-  if (num >= 1000000) return `${(num / 1000000).toFixed(2)}M`;
-  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
-  return num.toLocaleString();
-}
+import { ArrowLeft, Coins, Users } from "lucide-react";
 
 function formatSupply(supply: string, decimals: string) {
   const val = parseFloat(supply) / Math.pow(10, parseInt(decimals));
@@ -91,7 +84,7 @@ export default async function TokensPage() {
                       <td className="px-6 py-4 text-sm text-[#3a6b8a]">{i + 1}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          {token.icon_url ? (
+                          {token.icon_url && token.icon_url.startsWith("https://") ? (
                             <img src={token.icon_url} alt={token.name} className="w-8 h-8 rounded-full bg-[#0a1a30]" />
                           ) : (
                             <div className="w-8 h-8 rounded-full bg-[#00d4ff]/10 border border-[#00d4ff]/20 flex items-center justify-center">

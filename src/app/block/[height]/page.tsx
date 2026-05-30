@@ -1,4 +1,5 @@
 import { getBlock, getBlockTransactions } from "@/lib/api";
+import { shortenHash, timeAgo, formatValue } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -9,30 +10,7 @@ import {
   Pickaxe,
   Layers,
   Flame,
-  ExternalLink,
 } from "lucide-react";
-
-function shortenHash(hash: string) {
-  if (!hash) return "";
-  return `${hash.slice(0, 10)}...${hash.slice(-8)}`;
-}
-
-function timeAgo(timestamp: string) {
-  const seconds = Math.floor(
-    (Date.now() - new Date(timestamp).getTime()) / 1000
-  );
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
-}
-
-function formatValue(wei: string) {
-  const val = parseFloat(wei) / 1e18;
-  if (val === 0) return "0";
-  if (val < 0.001) return "<0.001";
-  return val.toFixed(6);
-}
 
 export default async function BlockPage({
   params,
