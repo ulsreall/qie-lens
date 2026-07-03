@@ -2,6 +2,7 @@ import { getAddress, getAddressTransactions } from "@/lib/api";
 import { shortenHash, timeAgo, formatValue } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import CopyButton from "@/components/CopyButton";
 import {
   Wallet,
   ArrowLeft,
@@ -81,7 +82,10 @@ export default async function AddressPage({
               <h2 className="text-xl font-bold">
                 {isContract ? "Contract" : "Address"}
               </h2>
-              <p className="text-[#3a6b8a] text-sm font-mono break-all">{address}</p>
+              <p className="text-[#3a6b8a] text-sm font-mono break-all flex items-center gap-2">
+                {address}
+                <CopyButton text={address} />
+              </p>
             </div>
           </div>
         </div>

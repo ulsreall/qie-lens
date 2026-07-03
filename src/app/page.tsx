@@ -216,14 +216,6 @@ export default async function Home() {
           </div>
           <div className="flex items-center gap-6">
             <a
-              href="https://mainnet.qie.digital"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#2a5a7a] hover:text-[#5a8aaa] text-sm transition-colors"
-            >
-              Explorer
-            </a>
-            <a
               href="https://docs.qie.digital"
               target="_blank"
               rel="noopener noreferrer"

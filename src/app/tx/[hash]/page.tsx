@@ -2,6 +2,7 @@ import { getTransaction } from "@/lib/api";
 import { shortenHash, timeAgo, formatValue } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import CopyButton from "@/components/CopyButton";
 import {
   ArrowLeft,
   ArrowRightLeft,
@@ -94,7 +95,10 @@ export default async function TxPage({
             </div>
             <div>
               <h2 className="text-xl font-bold">Transaction Details</h2>
-              <p className="text-[#3a6b8a] text-sm font-mono">{shortenHash(tx.hash)}</p>
+              <p className="text-[#3a6b8a] text-sm font-mono flex items-center gap-2">
+                {shortenHash(tx.hash)}
+                <CopyButton text={tx.hash} />
+              </p>
             </div>
           </div>
         </div>
