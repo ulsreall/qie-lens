@@ -19,6 +19,7 @@ export interface NetworkStats {
 export interface Transaction {
   hash: string;
   block: number;
+  block_number: number;
   timestamp: string;
   from: { hash: string; name?: string };
   to: { hash: string; name?: string };

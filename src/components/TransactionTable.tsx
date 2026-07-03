@@ -4,6 +4,7 @@ import { shortenHash, timeAgo, formatValue } from "@/lib/utils";
 interface Transaction {
   hash: string;
   block: number;
+  block_number: number;
   timestamp: string;
   from: { hash: string; name?: string };
   to: { hash: string; name?: string };
@@ -66,7 +67,7 @@ export default function TransactionTable({
                   </span>
                 </td>
                 <td className="px-6 py-3 text-sm text-[#3a6b8a]">
-                  {tx.block}
+                  {tx.block_number || tx.block}
                 </td>
                 <td className="px-6 py-3">
                   <span className="text-sm text-[#5a8aaa]">

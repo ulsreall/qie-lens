@@ -16,10 +16,25 @@ export function timeAgo(timestamp: string | number): string {
 export function formatValue(value: string | number): string {
   const num = typeof value === 'string' ? parseFloat(value) : value;
   if (isNaN(num)) return '0';
+  // Value might be in wei (18 decimals) or already decimal
+  if (num > 1e15) {
+    // Likely wei format - convert to QIE
+    const qie = num / 1e18;
+    return formatTokenDisplay(qie);
+  }
   if (num >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
   if (num >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
   if (num >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
   return num.toLocaleString();
+}
+
+function formatTokenDisplay(num: number): string {
+  if (num >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
+  if (num >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
+  if (num >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
+  if (num >= 1) return num.toFixed(2);
+  if (num >= 0.001) return num.toFixed(4);
+  return num.toFixed(6);
 }
 
 export function formatNumber(n: string | number): string {
