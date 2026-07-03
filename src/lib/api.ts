@@ -124,3 +124,37 @@ export function buildChartData(stats: NetworkStats) {
     ],
   };
 }
+
+export interface AddressInfo {
+  hash: string;
+  name: string | null;
+  is_contract: boolean;
+  is_verified: boolean;
+  coin_balance: string | null;
+  exchange_rate: string;
+  implementation_name: string | null;
+  token: { name: string; symbol: string; type: string; decimals: string } | null;
+  has_tokens: boolean;
+  has_validated_blocks: boolean;
+  creation_transaction_hash: string | null;
+  creator_address_hash: string | null;
+  ens_domain_name: string | null;
+}
+
+export async function getAddress(address: string): Promise<AddressInfo> {
+  return fetchAPI(`/addresses/${address}`);
+}
+
+export async function getAddressTransactions(
+  address: string,
+  limit = 20
+): Promise<{ items: Transaction[] }> {
+  return fetchAPI(`/addresses/${address}/transactions?limit=${limit}`);
+}
+
+export async function getAddressTokenTransfers(
+  address: string,
+  limit = 20
+): Promise<{ items: Transaction[] }> {
+  return fetchAPI(`/addresses/${address}/token-transfers?limit=${limit}`);
+}
