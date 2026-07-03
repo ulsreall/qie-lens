@@ -26,9 +26,9 @@ export default function GasPriceCard({ gasPrices }: { gasPrices: GasPrices }) {
       <div className="space-y-4">
         {levels.map((level) => (
           <div key={level.label}>
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[#3a6b8a] text-xs">{level.label}</span>
-              <span className="font-mono text-sm font-bold text-white">
+            <div className="flex items-center justify-between mb-1.5 gap-4">
+              <span className="text-[#3a6b8a] text-xs shrink-0">{level.label}</span>
+              <span className="font-mono text-sm font-bold text-white tabular-nums">
                 {level.value} <span className="text-[#2a5a7a] text-xs font-normal">Gwei</span>
               </span>
             </div>
