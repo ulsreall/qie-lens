@@ -22,7 +22,7 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
           <h3 className="text-white text-sm font-semibold">Latest Blocks</h3>
         </div>
         <a
-          href="https://testnet.qie.digital/blocks"
+          href="https://mainnet.qie.digital/blocks"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#00d4ff] hover:text-[#5be5ff] text-xs transition-colors"

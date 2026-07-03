@@ -26,8 +26,8 @@ export default async function Home() {
   try {
     [stats, txData, blockData] = await Promise.all([
       getStats(),
-      getTransactions(10),
-      getBlocks(10),
+      getTransactions(50),
+      getBlocks(50),
     ]);
   } catch (error) {
     return (
@@ -52,6 +52,8 @@ export default async function Home() {
   }
 
   const chartData = buildChartData(stats);
+  const recentBlocks = blockData.items.slice(0, 10);
+  const recentTxs = txData.items.slice(0, 10);
 
   return (
     <div className="min-h-screen bg-[#020a18] text-white grid-bg">
@@ -178,7 +180,7 @@ export default async function Home() {
                 Network Utilization
               </p>
               <p className="text-white font-bold text-lg">
-                {stats.network_utilization_percentage}
+                {parseFloat(stats.network_utilization_percentage.toFixed(4))}
                 <span className="text-[#2a5a7a] text-xs font-normal ml-1">%</span>
               </p>
             </div>
@@ -196,8 +198,8 @@ export default async function Home() {
 
         {/* Tables */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 fade-in" style={{ animationDelay: "0.3s" }}>
-          <BlockTable blocks={blockData.items} />
-          <TransactionTable transactions={txData.items} />
+          <BlockTable blocks={recentBlocks} />
+          <TransactionTable transactions={recentTxs} />
         </div>
       </main>
 

@@ -32,7 +32,7 @@ export default function SearchBar() {
     } else if (type === "block") {
       router.push(`/block/${trimmed}`);
     } else if (type === "address") {
-      window.open(`https://testnet.qie.digital/address/${trimmed}`, "_blank");
+      window.open(`https://mainnet.qie.digital/address/${trimmed}`, "_blank");
     } else {
       setError("Enter a block number, tx hash (0x...64), or address (0x...40)");
     }
