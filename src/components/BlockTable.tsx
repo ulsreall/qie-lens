@@ -21,14 +21,12 @@ export default function BlockTable({ blocks }: { blocks: Block[] }) {
           <div className="w-2 h-2 rounded-full bg-[#00d4ff] pulse-dot" />
           <h3 className="text-white text-sm font-semibold">Latest Blocks</h3>
         </div>
-        <a
-          href="https://mainnet.qie.digital/blocks"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/blocks"
           className="text-[#00d4ff] hover:text-[#5be5ff] text-xs transition-colors"
         >
           View All →
-        </a>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">

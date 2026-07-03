@@ -25,14 +25,12 @@ export default function TransactionTable({
           <div className="w-2 h-2 rounded-full bg-[#5be5ff] pulse-dot" />
           <h3 className="text-white text-sm font-semibold">Latest Transactions</h3>
         </div>
-        <a
-          href="https://mainnet.qie.digital/transactions"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/transactions"
           className="text-[#00d4ff] hover:text-[#5be5ff] text-xs transition-colors"
         >
           View All →
-        </a>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
