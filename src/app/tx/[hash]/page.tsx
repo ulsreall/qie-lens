@@ -43,14 +43,14 @@ export default async function TxPage({
   const details = [
     { label: "Transaction Hash", value: tx.hash, icon: <Hash className="w-4 h-4" />, mono: true, full: true },
     { label: "Status", value: isSuccess ? "Success" : "Failed", icon: isSuccess ? <CheckCircle2 className="w-4 h-4 text-green-400" /> : <XCircle className="w-4 h-4 text-red-400" />, badge: true, success: isSuccess },
-    { label: "Block", value: tx.block.toLocaleString(), icon: <Box className="w-4 h-4" />, link: `/block/${tx.block}` },
+    { label: "Block", value: (tx.block_number || tx.block || 0).toLocaleString(), icon: <Box className="w-4 h-4" />, link: `/block/${tx.block_number || tx.block}` },
     { label: "Timestamp", value: `${timeAgo(tx.timestamp)} (${new Date(tx.timestamp).toLocaleString()})`, icon: <Clock className="w-4 h-4" /> },
     { label: "Method", value: tx.decoded_input?.method_call || tx.method || "transfer", icon: <ArrowRightLeft className="w-4 h-4" />, mono: true },
     { label: "From", value: tx.from?.hash, icon: <ArrowRightLeft className="w-4 h-4" />, mono: true, full: true, name: tx.from?.name },
     { label: "To", value: tx.to?.hash, icon: <ArrowRightLeft className="w-4 h-4" />, mono: true, full: true, name: tx.to?.name },
     { label: "Value", value: `${formatValue(tx.value)} QIE`, icon: <ArrowRightLeft className="w-4 h-4" /> },
     { label: "Transaction Fee", value: `${formatFee(tx.fee)} QIE`, icon: <Fuel className="w-4 h-4" /> },
-    { label: "Gas Price", value: `${tx.gas_price || "N/A"} Gwei`, icon: <Fuel className="w-4 h-4" /> },
+    { label: "Gas Price", value: tx.gas_price ? `${(parseInt(tx.gas_price) / 1e9).toFixed(2)} Gwei` : "N/A", icon: <Fuel className="w-4 h-4" /> },
     { label: "Gas Used", value: parseInt(tx.gas_used || "0").toLocaleString(), icon: <Fuel className="w-4 h-4" /> },
     { label: "Gas Limit", value: parseInt(tx.gas_limit || "0").toLocaleString(), icon: <Fuel className="w-4 h-4" /> },
     { label: "Nonce", value: tx.nonce?.toString() || "N/A", icon: <Hash className="w-4 h-4" /> },
@@ -139,14 +139,14 @@ export default async function TxPage({
         </div>
 
         {/* Input Data */}
-        {tx.input && tx.input !== "0x" && (
+        {(tx.input || tx.raw_input) && (tx.input || tx.raw_input) !== "0x" && (
           <div className="bg-[#061024] border border-[#0c2a4a] rounded-2xl overflow-hidden lens-ring">
             <div className="px-6 py-4 border-b border-[#0c2a4a]">
               <h3 className="text-white text-sm font-semibold">Input Data</h3>
             </div>
             <div className="px-6 py-4">
               <p className="text-[#5a8aaa] text-xs font-mono break-all bg-[#0a1a30] rounded-lg p-4 border border-[#0c2a4a]">
-                {tx.input}
+                {tx.input || tx.raw_input}
               </p>
             </div>
           </div>

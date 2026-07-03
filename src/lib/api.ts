@@ -34,6 +34,7 @@ export interface Transaction {
   type: number;
   confirmations: number;
   input: string;
+  raw_input?: string;
   decoded_input?: { method_call: string; method_id: string; parameters: unknown[] };
 }
 
