@@ -1,4 +1,4 @@
-const BASE_URL = "https://testnet.qie.digital/api/v2";
+const BASE_URL = "https://mainnet.qie.digital/api/v2";
 
 export interface NetworkStats {
   average_block_time: number;

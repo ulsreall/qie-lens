@@ -87,7 +87,7 @@ export default async function Home() {
             </div>
             <div className="hidden sm:flex items-center gap-2 bg-[#061024] border border-[#0c2a4a] rounded-xl px-3 py-2">
               <div className="w-2 h-2 bg-[#00d4ff] rounded-full pulse-dot" />
-              <span className="text-[#3a6b8a] text-xs font-medium">Testnet</span>
+              <span className="text-[#3a6b8a] text-xs font-medium">Mainnet</span>
             </div>
             {stats.coin_price && (
               <div className="text-right bg-[#061024] border border-[#0c2a4a] rounded-xl px-3 py-2">
@@ -96,13 +96,15 @@ export default async function Home() {
                 </div>
                 <div
                   className={`text-xs font-medium ${
-                    stats.coin_price_change_percentage >= 0
+                    stats.coin_price_change_percentage != null && stats.coin_price_change_percentage >= 0
                       ? "text-[#5be5ff]"
                       : "text-red-400"
                   }`}
                 >
-                  {stats.coin_price_change_percentage >= 0 ? "+" : ""}
-                  {stats.coin_price_change_percentage.toFixed(2)}%
+                  {stats.coin_price_change_percentage != null
+                    ? (stats.coin_price_change_percentage >= 0 ? "+" : "") +
+                      stats.coin_price_change_percentage.toFixed(2) + "%"
+                    : "N/A"}
                 </div>
               </div>
             )}
@@ -125,7 +127,7 @@ export default async function Home() {
           <StatCard
             title="Total Transactions"
             value={formatNumber(stats.total_transactions)}
-            subtitle={`${formatNumber(stats.transactions_today)} today`}
+            subtitle={stats.transactions_today ? `${formatNumber(stats.transactions_today)} today` : undefined}
             icon={<ArrowRightLeft className="w-4 h-4" />}
           />
           <StatCard
@@ -168,7 +170,7 @@ export default async function Home() {
                 Gas Used Today
               </p>
               <p className="text-white font-bold text-lg">
-                {formatNumber(stats.gas_used_today)}
+                {stats.gas_used_today ? formatNumber(stats.gas_used_today) : "—"}
               </p>
             </div>
             <div>
@@ -207,12 +209,12 @@ export default async function Home() {
               <Activity className="w-3 h-3 text-white" />
             </div>
             <p className="text-[#1a3a5a] text-sm">
-              QIE Lens — Built for QIE Hackathon 2026
+              QIE Lens — QIE Blockchain Explorer
             </p>
           </div>
           <div className="flex items-center gap-6">
             <a
-              href="https://testnet.qie.digital"
+              href="https://mainnet.qie.digital"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#2a5a7a] hover:text-[#5a8aaa] text-sm transition-colors"

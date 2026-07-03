@@ -12,7 +12,7 @@
 ![License](https://img.shields.io/badge/License-MIT-00d4ff?style=flat-square)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000?style=flat-square&logo=vercel)
 
-[🚀 Live Demo](https://qie-lens.vercel.app) · [🎬 Demo Video](https://youtu.be/MqNqHQd06i8) · [📖 QIE Docs](https://docs.qie.digital) · [🔗 Explorer](https://testnet.qie.digital) · [🐛 Report Bug](https://github.com/ulsreall/qie-lens/issues)
+[🚀 Live Demo](https://qie-lens.vercel.app) · [🎬 Demo Video](https://youtu.be/MqNqHQd06i8) · [📖 QIE Docs](https://docs.qie.digital) · [🔗 Explorer](https://mainnet.qie.digital) · [🐛 Report Bug](https://github.com/ulsreall/qie-lens/issues)
 
 </div>
 
@@ -76,7 +76,7 @@ QIE Lens provides a **clean, real-time dashboard** that surfaces the most import
 | **Charts** | Recharts (AreaChart) |
 | **Icons** | Lucide React |
 | **Language** | TypeScript 5 |
-| **API** | [QIE Blockscout API v2](https://testnet.qie.digital/api/v2/) |
+| **API** | [QIE Blockscout API v2](https://mainnet.qie.digital/api/v2/) |
 | **Deployment** | Vercel |
 
 ## 🏗️ Architecture
@@ -104,7 +104,7 @@ QIE Lens provides a **clean, real-time dashboard** that surfaces the most import
 │                                                  │
 ├─────────────────────────────────────────────────┤
 │              QIE Blockscout API v2               │
-│          https://testnet.qie.digital/api/v2      │
+|          https://mainnet.qie.digital/api/v2      |
 └─────────────────────────────────────────────────┘
 ```
 
@@ -178,7 +178,7 @@ qie-lens/
 | `GET /api/v2/transactions/{hash}` | Transaction detail |
 | `GET /api/v2/tokens?limit=10` | Token list |
 
-Base URL: `https://testnet.qie.digital/api/v2`
+Base URL: `https://mainnet.qie.digital/api/v2`
 
 ## 🎨 Design System
 
